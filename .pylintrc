@@ -1,0 +1,8 @@
+[MASTER]
+init-hook="import sys; from pathlib import Path; sys.path.insert(0, str(Path.cwd() / 'src'));"
+extension-pkg-whitelist=lxml
+
+[FORMAT]
+max-line-length=120
+
+[MESSAGES CONTROL]
