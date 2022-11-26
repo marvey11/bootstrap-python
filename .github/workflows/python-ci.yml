@@ -28,8 +28,8 @@ jobs:
 
       - name: Linting with pylint
         run: |
-          pylint ./src/
+          ./scripts/run-pylint.sh
 
       - name: Unit Testing with pytest
         run: |
-          pytest ./tests/
+          ./scripts/run-tests.sh
