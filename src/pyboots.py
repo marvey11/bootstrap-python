@@ -7,19 +7,24 @@ bootstrap-python --- Bootstrapper for Python projects.
 Created on 08 March 2022.
 
 @author: Marco Wegner
-@contact: devel@marcowegner.de
-@copyright: 2022 Marco Wegner. All rights reserved.
+@copyright: Copyright 2022 Marco Wegner
 @license: MIT
 """
+
+__author__ = "Marco Wegner"
+__copyright__ = "Copyright 2022, Marco Wegner"
+__license__ = "MIT"
+__version__ = "0.1.0"
+__maintainer__ = "Marco Wegner"
+__status__ = "Development"
+
 
 import sys
 from argparse import ArgumentParser, Namespace
 
-__author__ = "Marco Wegner"
-__version__ = "0.1.0"
-__date__ = "2022-03-08"
-__updated__ = "2022-11-27"
-__license__ = "MIT"
+from bootstrap.processor import Processor, ProcessorParameters
+
+LAST_UPDATED = "2022-11-27"
 
 # Return Codes
 RC_SUCCESS = 0
@@ -30,7 +35,15 @@ def main() -> int:
 
     args = _get_command_line_args()
 
-    print(args)
+    params: ProcessorParameters = {
+        "project_name": args.bootstrap_project,
+        "enable_linting": args.bootstrap_linting,
+        "enabled_unit_testing": args.bootstrap_testing,
+        "enabled_test_coverage": args.bootstrap_coverage,
+    }
+
+    processor = Processor(params)
+    processor.run()
 
     return RC_SUCCESS
 
@@ -38,14 +51,14 @@ def main() -> int:
 def _get_command_line_args() -> Namespace:
     parser = ArgumentParser()
 
-    parser.add_argument("project_name", help="the name of the Python project to create")
+    parser.add_argument("bootstrap_project", help="the name of the Python project to bootstrap")
 
     parser.add_argument("--disable-linting", dest="bootstrap_linting",
-                        action="store_false", default=True, help="disable linting")
+                        action="store_false", default=True, help="disable linting by default")
     parser.add_argument("--disable-testing", dest="bootstrap_testing",
-                        action="store_false", default=True, help="disable testing")
+                        action="store_false", default=True, help="disable testing by default")
     parser.add_argument("--disable-coverage", dest="bootstrap_coverage", action="store_false",
-                        default=True, help="disable unit test coverage")
+                        default=True, help="disable unit test coverage by default")
 
     parser.add_argument("--version", action="version", version=_get_version_message(True))
 
@@ -55,7 +68,7 @@ def _get_command_line_args() -> Namespace:
 def _get_version_message(short: bool = False) -> str:
     name = "pyboots"
     template = "{name} v{version} ({updated})" if short else "This is {name} version {version} (last updated {updated})"
-    return template.format(name=name, version=__version__, updated=__updated__)
+    return template.format(name=name, version=__version__, updated=LAST_UPDATED)
 
 
 if __name__ == "__main__":

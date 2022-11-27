@@ -4,8 +4,7 @@
 State module for the Python Boostrapper.
 
 @author: Marco Wegner
-@contact: devel@marcowegner.de
-@copyright: 2022 Marco Wegner. All rights reserved.
+@copyright: Copyright 2022 Marco Wegner
 @license: MIT
 """
 
